@@ -1,5 +1,5 @@
 {
-    "name": "tangwei/composer",
+    "name": "test/composer",
     "autoload": {
         "psr-4": {
             "Test\\Composer\\": "src/"
@@ -7,7 +7,7 @@
     },
     "authors": [
         {
-            "name": "tangwei",
+            "name": "tangweiwei",
             "email": "996501126@qq.com"
         }
     ],
