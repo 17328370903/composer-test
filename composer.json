@@ -1,5 +1,5 @@
 {
-    "name": "test/composer",
+    "name": "tangwei/composer",
     "autoload": {
         "psr-4": {
             "Test\\Composer\\": "src/"
