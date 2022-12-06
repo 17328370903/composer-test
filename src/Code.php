@@ -11,12 +11,11 @@ class Code
     private int $width = 200;
     private int $height = 80;
     private string $fontPath;
-    private int $fontSize = 30;
+    private int $fontSize = 35;
     private int $pixel = 120;
     private int $line = 10;
     private int $angle = 15;
     private string $key = 'tw_code';
-
 
     public function __construct()
     {
@@ -28,10 +27,10 @@ class Code
         $code = $this->getRandCode();
         $im = imagecreate($this->width, $this->height);
         imagecolorallocatealpha($im, 255, 255, 255,0);
-        $text_color = imagecolorallocate($im, 0, 0, 0);
         $step = ($this->width - $this->codeLen * $this->fontSize) / ($this->codeLen + 1);
         $space = $step;
         for ($i = 0; $i < $this->codeLen;$i++){
+            $text_color = $this->randomColor($im);
             imagettftext($im,$this->fontSize,$this->angle,$space,($this->height + $this->fontSize) / 2 ,$text_color,$this->fontPath,substr($code,$i,1));
             $space += $step + $this->fontSize;
         }
@@ -51,7 +50,6 @@ class Code
         for ($i = 0; $i < $this->codeLen; $i++) {
             $code .= substr($this->codeString, mt_rand(0, $len - 1), 1);
         }
-
         return $code;
     }
 
@@ -61,12 +59,18 @@ class Code
         for ($i = 0 ; $i < $this->pixel; $i++){
             $x = mt_rand(0,$this->width);
             $y = mt_rand(0,$this->height);
-            $red = mt_rand(0,255);
-            $blue = mt_rand(0,255);
-            $green = mt_rand(0,255);
-            $pixelColor = imagecolorallocate($im, $red, $green, $blue);
+            $pixelColor = $this->randomColor($im);
             imagesetpixel($im,$x,$y,$pixelColor);
         }
+    }
+
+    //生成随机颜色
+    private function randomColor($im): bool|int
+    {
+        $red = mt_rand(0,255);
+        $blue = mt_rand(0,255);
+        $green = mt_rand(0,255);
+        return imagecolorallocate($im, $red, $green, $blue);
     }
 
     //生成干扰线
@@ -77,10 +81,7 @@ class Code
             $y1 = mt_rand(0,$this->height);
             $x2 = mt_rand(0,$this->width);
             $y2 = mt_rand(0,$this->height);
-            $red = mt_rand(0,255);
-            $blue = mt_rand(0,255);
-            $green = mt_rand(0,255);
-            $lineColor = imagecolorallocate($im, $red, $green, $blue);
+            $lineColor = $this->randomColor($im);
             imageline($im, $x1, $y1, $x2, $y2, $lineColor);
         }
     }
